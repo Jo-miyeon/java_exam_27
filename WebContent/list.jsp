@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +22,14 @@
 			<td>20201216</td>
 		</tr>
 	<%}%>
+	<% int a=10;
+	int b=20;
+	out.println(a);
+	%><br>
+	<%=b %><br>
+	<%! public void test() {
+		System.out.println("aa");
+	}%>
 </table>
 </body>
 </html>

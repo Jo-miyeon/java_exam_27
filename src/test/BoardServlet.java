@@ -21,6 +21,9 @@ public class BoardServlet extends HttpServlet {
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();//브라우저에 출력해줌
 		
+		ArticleDao articleDao = new ArticleDao();
+		ArrayList<Article> articles = articleDao.getArticles();
+		
 		out.println("<table border=\"1\">");
 		out.println("<tr>");
 		out.println("<td>");
@@ -33,25 +36,18 @@ public class BoardServlet extends HttpServlet {
 		out.println("<작성일>");
 		out.println("</td>");
 		out.println("</tr>");
-		out.println("<tr>");
-		out.println("<td>공지제목1</td>");
-		out.println("<td>공지작성자1</td>");
-		out.println("<td>공지작성일1</td>");
-		out.println("</tr>");
-		out.println("<tr>");
-		out.println("<td>공지제목2</td>");
-		out.println("<td>공지작성자2</td>");
-		out.println("<td>공지작성일2</td>");
-		out.println("</tr>");
-		out.println("<tr>");
-		out.println("<td>공지제목3</td>");
-		out.println("<td>공지작성자3</td>");
-		out.println("<td>공지작성일3</td>");
-		out.println("</tr>");
+		
+		for(int i=0; i<articles.size(); i++) {
+			out.println("<tr>");
+			out.println("<td>"+articles.get(i).getTitle()+"</td>");
+			out.println("<td>"+articles.get(i).getNickname()+"</td>");
+			out.println("<td>"+articles.get(i).getRegDate()+"</td>");
+			out.println("</tr>");	
+		}
+		
 		out.println("</table>");
 		
-		ArticleDao articleDao = new ArticleDao();
-		ArrayList<Article> articles = articleDao.getArticles();
+		
 		for(int i=0; i<articles.size();i++) {
 			System.out.println("제목:"+articles.get(i).getTitle());
 		}
