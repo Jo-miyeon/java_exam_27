@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="board.article.ArticleDao" %>
+<%@ page import="board.article.Article" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +10,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+<h1>게시물목록.</h1>
+<%
+	ArrayList<Article> articles = (ArrayList<Article>)request.getAttribute("myData");  
+%>
 <table border="1">
 <tr>
 		<td>번호</td>
@@ -31,5 +38,6 @@
 		System.out.println("aa");
 	}%>
 </table>
+<a href=http://localhost:8080/web-exam1/TestServlet">링크1</a>
 </body>
 </html>
