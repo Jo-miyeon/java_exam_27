@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import board.article.Article;
 import board.article.ArticleDao;
 
-@WebServlet("/Controller")//클래스명과 서블렛명은 달라도된다.
+@WebServlet("/article")//클래스명과 서블렛명은 달라도된다.
 public class Controller extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,7 +33,6 @@ public class Controller extends HttpServlet {
 			request.setAttribute("myData",articles);//변수와 넘길데이터
 			dest = "/list.jsp"; //목적지 jsp
 		}else if(action.equals("insert")) {
-			System.out.println("====a");
 			String title = request.getParameter("title");
 			String body = request.getParameter("body");
 			int mid = Integer.parseInt(request.getParameter("mid"));
@@ -41,8 +40,16 @@ public class Controller extends HttpServlet {
 			dao.insertArticle(title, body, mid);
 			
 		}else if(action.equals("update")) {
+			String title = request.getParameter("title");
+			String body = request.getParameter("body");
+			int id = Integer.parseInt(request.getParameter("id"));
+			
+			dao.updateArticle(title, body, id);
 			
 		}else if(action.equals("delete")) {
+			int id = Integer.parseInt(request.getParameter("id"));
+			
+			dao.deleteArticle(id);
 			
 		}else {
 			dest="/gugu.jsp";

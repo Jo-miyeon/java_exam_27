@@ -12,8 +12,10 @@
 <body>
 <h1>게시물목록.</h1>
 <%
-	ArrayList<Article> articles = (ArrayList<Article>)request.getAttribute("myData");  
+	//ArrayList<Article> articles = (ArrayList<Article>)request.getAttribute("myData");  
 %>
+
+
 <table border="1">
 		<tr>
 			<td>번호</td>
@@ -22,15 +24,19 @@
 			<td>작성일</td>
 			<td>조회수</td>
 		</tr>
-		<% for(int i = 0; i < articles.size(); i++) { %>
+		
+		<c:forEach var="article" items="${myData}"> 
+		<!-- mydata랑 연결되어있는 articles가 꺼내져 
+		mydata에 있는걸 꺼내서 article이라는 변수에 담음. article은 객체라서 원하는 멤버를 정해줘야-->
 		<tr>
-			<td><%= articles.get(i).getId() %></td>
-			<td><%= articles.get(i).getTitle() %></td>
-			<td><%= articles.get(i).getNickname() %></td>
-			<td><%= articles.get(i).getRegDate() %></td>
-			<td><%= articles.get(i).getHit() %></td>
+			<td>${article.id}</td>
+			<td>${article.title}</td>
+			<td>${article.nickname}</td>
+			<td>${article.regDate}</td>
+			<td>${article.hit}</td>
 		</tr>
-		<% } %>
+		</c:forEach>
+		
 	</table>
 <a href=http://localhost:8080/web-exam1/TestServlet">링크1</a>
 </body>

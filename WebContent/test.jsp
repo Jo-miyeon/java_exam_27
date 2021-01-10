@@ -8,7 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 	<c:forEach var="i" begin="1" end="5">
 		<div>안녕</div>
 	</c:forEach>
