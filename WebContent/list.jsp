@@ -15,29 +15,23 @@
 	ArrayList<Article> articles = (ArrayList<Article>)request.getAttribute("myData");  
 %>
 <table border="1">
-<tr>
-		<td>번호</td>
-		<td>제목</td>
-		<td>작성자</td>
-		<td>조회수</td>
-	</tr>
-	<%for(int i=0; i<5; i++){%>
 		<tr>
-			<td>1</td>
-			<td>게시물1</td>
-			<td>홍길동</td>
-			<td>20201216</td>
+			<td>번호</td>
+			<td>제목</td>
+			<td>작성자</td>
+			<td>작성일</td>
+			<td>조회수</td>
 		</tr>
-	<%}%>
-	<% int a=10;
-	int b=20;
-	out.println(a);
-	%><br>
-	<%=b %><br>
-	<%! public void test() {
-		System.out.println("aa");
-	}%>
-</table>
+		<% for(int i = 0; i < articles.size(); i++) { %>
+		<tr>
+			<td><%= articles.get(i).getId() %></td>
+			<td><%= articles.get(i).getTitle() %></td>
+			<td><%= articles.get(i).getNickname() %></td>
+			<td><%= articles.get(i).getRegDate() %></td>
+			<td><%= articles.get(i).getHit() %></td>
+		</tr>
+		<% } %>
+	</table>
 <a href=http://localhost:8080/web-exam1/TestServlet">링크1</a>
 </body>
 </html>

@@ -26,11 +26,24 @@ public class Controller extends HttpServlet {
 		
 		//jsp에 articles넘기기
 		//1.request객체에 데이터 저장
-		request.setAttribute("myData",articles);//변수와 넘길데이터
+		
 		//2.위에서 저장한 request객체를 이용해서 새로운 jsp 호출요청->목적지 jsp필요
 		String dest = "";
-		if(action.equals("list1")) {
+		if(action.equals("list")) {
+			request.setAttribute("myData",articles);//변수와 넘길데이터
 			dest = "/list.jsp"; //목적지 jsp
+		}else if(action.equals("insert")) {
+			System.out.println("====a");
+			String title = request.getParameter("title");
+			String body = request.getParameter("body");
+			int mid = Integer.parseInt(request.getParameter("mid"));
+			
+			dao.insertArticle(title, body, mid);
+			
+		}else if(action.equals("update")) {
+			
+		}else if(action.equals("delete")) {
+			
 		}else {
 			dest="/gugu.jsp";
 		}
