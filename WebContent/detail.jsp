@@ -10,11 +10,11 @@
 <h1>게시물 상세보기</h1>
 번호:${myData2.id}
 <hr>
-제목:${myData2.title }
+제목:${myData2.title}
 <hr>
 내용:${myData2.body }
 <hr>
-<a href="http://localhost:8080/article?action=update&id=1&title=cc&body=dd">수정</a>
-<a href="http://localhost:8080/article?action=delete&id=1">삭제</a>
+<a href="http://localhost:8080/web-exam1/article?action=showUpdate&id=${myData2.id}">수정</a>
+<a href="http://localhost:8080/web-exam1/article?action=delete&id=${myData2.id}">삭제</a>
 </body>
 </html>

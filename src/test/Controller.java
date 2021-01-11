@@ -56,6 +56,13 @@ public class Controller extends HttpServlet {
 			Article article = dao.getArticleById(id);
 			request.setAttribute("myData2",article);
 			dest = "detail.jsp";
+		}else if(action.equals("showAdd")) {
+			dest = "addForm.jsp";
+		}else if(action.equals("showUpdate")) {
+			int id = Integer.parseInt(request.getParameter("id"));
+			Article article = dao.getArticleById(id);
+			request.setAttribute("myData3",article);
+			dest = "updateForm.jsp";
 		}
 		request.setAttribute("myData", dao.getArticles()); //db 바뀐내용이 적용이 된 내용을 다시 mydata로 변경 그걸 list로 보냄
 		//3.요청하기

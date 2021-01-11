@@ -35,7 +35,7 @@
 		mydata에 있는걸 꺼내서 article이라는 변수에 담음. article은 객체라서 원하는 멤버를 정해줘야--> 
 		<tr>
 			<td>${article.id}</td>
-			<td><a href="http://localhost:8080/article?action=detail&id=${article.id}">${article.title}_${article.id}</a></td>
+			<td><a href="http://localhost:8080/web-exam1/article?action=detail&id=${article.id}">${article.title}_${article.id}</a></td>
 			<td>${article.nickname}</td>
 			<td>${article.regDate}</td>
 			<td>${article.hit}</td>
@@ -44,7 +44,7 @@
 		</c:forEach>
 		
 	</table>
-<a href="http://localhost:8080/article?action=insert&title=aa&body=bb&mid=1">글쓰기</a> <!-- url변경을 통해서 기능들을 선택 -->
+<a href="http://localhost:8080/web-exam1/article?action=showAdd">글쓰기</a> <!-- url변경을 통해서 기능들을 선택 -->
 
 </body>
 </html>
