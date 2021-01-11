@@ -28,7 +28,7 @@ public class Controller extends HttpServlet {
 		//1.request객체에 데이터 저장
 		
 		//2.위에서 저장한 request객체를 이용해서 새로운 jsp 호출요청->목적지 jsp필요
-		String dest = "";
+		String dest = "list.jsp";
 		if(action.equals("list")) {
 			request.setAttribute("myData",articles);//변수와 넘길데이터
 			dest = "/list.jsp"; //목적지 jsp
@@ -51,10 +51,13 @@ public class Controller extends HttpServlet {
 			
 			dao.deleteArticle(id);
 			
-		}else {
-			dest="/gugu.jsp";
+		}else if(action.equals("detail")) {
+			int id = Integer.parseInt(request.getParameter("id"));
+			Article article = dao.getArticleById(id);
+			request.setAttribute("myData2",article);
+			dest = "detail.jsp";
 		}
-		
+		request.setAttribute("myData", dao.getArticles()); //db 바뀐내용이 적용이 된 내용을 다시 mydata로 변경 그걸 list로 보냄
 		//3.요청하기
 		RequestDispatcher rd = request.getRequestDispatcher(dest); //디스패처는 적절한 jsp에다가 요청을 알맞게 전달해주는 객체 서비스 요 
 		rd.forward(request, response); //forward를 쓰면은 request,response를 인자로 넘긴다.
