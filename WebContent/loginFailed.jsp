@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-로그인 실패!
+로그인 실패!<br>
+<a href="http://localhost:8080/web-exam1/article?action=list">목록으로 돌아가기</a>
+<a href="http://localhost:8080/web-exam1/article?action=showLogin">로그인</a>
 </body>
 </html>

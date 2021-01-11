@@ -14,5 +14,10 @@ public class MemberDao {
 		String sql = "select * from member where loginId = ? and loginPw = ?";
 		return db.getRow(sql, new MemberRowMapper(), id, pw);
 	}
+
+	public Member getMemberById(int id) {
+		String sql = "select * from member where id=?";
+		return db.getRow(sql, new MemberRowMapper(),id);
+	}
 	
 }

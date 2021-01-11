@@ -13,7 +13,7 @@
 			<br>
 			제목: <input type="text" name="title" value="${myData3.title}">
 			<br>
-			내용: <input type="text" name="body" value="${myData3.title}">
+			내용: <input type="text" name="body" value="${myData3.body}">
 			<br>
 			<input type="hidden" name="id" value="${myData3.id}">
 			<input type="hidden" name="action" value="update">

@@ -39,8 +39,9 @@ public class Controller extends HttpServlet {
 		}else if(action.equals("insert")) {
 			String title = request.getParameter("title");
 			String body = request.getParameter("body");
-			int mid = Integer.parseInt(request.getParameter("mid"));
-			
+			int mid = Integer.parseInt(request.getParameter("mid"));//게시물 등록할때 
+			Member loginedMember = mdao.getMemberById(mid);
+			request.setAttribute("loginedMember", loginedMember);
 			dao.insertArticle(title, body, mid);
 			
 		}else if(action.equals("update")) {
@@ -61,6 +62,9 @@ public class Controller extends HttpServlet {
 			request.setAttribute("myData2",article);
 			dest = "detail.jsp";
 		}else if(action.equals("showAdd")) {
+			int mid = Integer.parseInt(request.getParameter("mid"));
+			Member loginedMember = mdao.getMemberById(mid);
+			request.setAttribute("loginedMember", loginedMember);
 			dest = "addForm.jsp";
 		}else if(action.equals("showUpdate")) {
 			int id = Integer.parseInt(request.getParameter("id"));
@@ -74,6 +78,7 @@ public class Controller extends HttpServlet {
 			String loginPw = request.getParameter("loginPw");
 			Member loginedMember = mdao.getMemberByLoginIdAndLoginPw(loginId, loginPw);
 			if(loginedMember != null) {
+				request.setAttribute("loginedMember", loginedMember);
 				dest = "list.jsp";
 			}else {
 				dest = "loginFailed.jsp";

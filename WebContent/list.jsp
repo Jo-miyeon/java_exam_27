@@ -10,6 +10,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<c:if test="${loginedMember != null}">${loginedMember.nickname}님 반갑습니다!</c:if>
+<c:if test="${loginedMember == null}">
+<a href="http://localhost:8080/web-exam1/article?action=showLogin">로그인</a>
+<a href="http://localhost:8080/web-exam1/article?action=showMember">회원가입</a>
+</c:if>
 <body>
 <h1>게시물목록</h1>
 <%
@@ -35,7 +40,17 @@
 		mydata에 있는걸 꺼내서 article이라는 변수에 담음. article은 객체라서 원하는 멤버를 정해줘야--> 
 		<tr>
 			<td>${article.id}</td>
-			<td><a href="http://localhost:8080/web-exam1/article?action=detail&id=${article.id}">${article.title}_${article.id}</a></td>
+			<td>
+			<c:choose>
+				<c:when test="${loginedMember == null}">
+					<a href="http://localhost:8080/web-exam1/article?action=showLogin">${article.title}_${article.id}</a>
+				</c:when>
+				<c:otherwise>
+					<a href="http://localhost:8080/web-exam1/article?action=detail&id=${article.id}">${article.title}_${article.id}</a></td>
+				</c:otherwise>
+			</c:choose>
+				
+				
 			<td>${article.nickname}</td>
 			<td>${article.regDate}</td>
 			<td>${article.hit}</td>
@@ -44,7 +59,7 @@
 		</c:forEach>
 		
 	</table>
-<a href="http://localhost:8080/web-exam1/article?action=showAdd">글쓰기</a> <!-- url변경을 통해서 기능들을 선택 -->
+<a href="http://localhost:8080/web-exam1/article?action=showAdd&mid=${loginedMember.id}">글쓰기</a> <!-- url변경을 통해서 기능들을 선택 -->
 
 </body>
 </html>
