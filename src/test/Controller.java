@@ -1,6 +1,7 @@
 package test;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import board.article.Article;
 import board.article.ArticleDao;
+import board.member.Member;
+import board.member.MemberDao;
 
 @WebServlet("/article")//클래스명과 서블렛명은 달라도된다.
 public class Controller extends HttpServlet {
@@ -19,6 +22,7 @@ public class Controller extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8"); //문자 인코딩 utf-8로 설정
 		ArticleDao dao = new ArticleDao();
+		MemberDao mdao = new MemberDao();
 		ArrayList<Article> articles = dao.getArticles();
 		
 		String action = request.getParameter("action");
@@ -63,6 +67,25 @@ public class Controller extends HttpServlet {
 			Article article = dao.getArticleById(id);
 			request.setAttribute("myData3",article);
 			dest = "updateForm.jsp";
+		}else if(action.equals("showLogin")) {
+			dest="loginForm.jsp";
+		}else if(action.equals("doLogin")) {
+			String loginId = request.getParameter("loginId");
+			String loginPw = request.getParameter("loginPw");
+			Member loginedMember = mdao.getMemberByLoginIdAndLoginPw(loginId, loginPw);
+			if(loginedMember != null) {
+				dest = "list.jsp";
+			}else {
+				dest = "loginFailed.jsp";
+			}
+		}else if(action.equals("showMember")) {
+			dest="memberForm.jsp";
+		}else if(action.equals("doInsertMember")) {
+			String loginId = request.getParameter("loginId");
+			String loginPw = request.getParameter("loginPw");
+			String nickname = request.getParameter("nickname");
+			mdao.insertMember(loginId, loginPw, nickname);
+			dest = "loginForm.jsp";
 		}
 		request.setAttribute("myData", dao.getArticles()); //db 바뀐내용이 적용이 된 내용을 다시 mydata로 변경 그걸 list로 보냄
 		//3.요청하기
