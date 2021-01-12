@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>회원가입 페이지</h1>
-	<form action="article">
+	<form action="member">
 		아이디
 		<br>
 		<input type="text" name="loginId">

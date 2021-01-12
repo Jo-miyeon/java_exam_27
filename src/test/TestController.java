@@ -13,10 +13,19 @@ import javax.servlet.http.HttpServletResponse;
 public class TestController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		request.setAttribute("test", "테스트 메시지.");
-		RequestDispatcher rd = request.getRequestDispatcher("/Test"); //새로운애에게 요청넘기
-		rd.forward(request, response);
+		String action = request.getParameter("action");
+		if(action != null && action.equals("doTest")) {
+			String text = request.getParameter("text");
+			String select = request.getParameter("select");
+			String chkbox = request.getParameter("chkbox");
+			
+			System.out.println(text);
+			System.out.println(select);
+			System.out.println(chkbox);
+			
+			RequestDispatcher rd = request.getRequestDispatcher("SelectTest.jsp");
+			rd.forward(request, response);
+		}
 	}
 
 }

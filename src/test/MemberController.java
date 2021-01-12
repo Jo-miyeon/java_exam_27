@@ -37,8 +37,16 @@ public class MemberController extends HttpServlet {
 		}
 		//forwarding 지금까지 하고 있던 방식 requestDispatcher를 이용해서 forward함 (a가 b에게 요청을 위임)
 		//redirecting 새로 요청 
-		RequestDispatcher rd = request.getRequestDispatcher(dest); 
-		rd.forward(request, response);
+		if(dest.startsWith("redirect:")) {
+			//리다이렉팅 
+			String[] bits = dest.split("");
+			String url = bits[1];
+			response.sendRedirect(url);
+		}else {
+			//forwarding
+			RequestDispatcher rd = request.getRequestDispatcher(dest);
+			rd.forward(request, response);
+		}
 	}
 	private String doInsertMember(HttpServletRequest request, HttpServletResponse response) {
 		String loginId = request.getParameter("loginId");
@@ -47,7 +55,7 @@ public class MemberController extends HttpServlet {
 		mdao.insertMember(loginId, loginPw, nickname);
 		return "loginForm.jsp";
 	}
-	private void doLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private String doLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String loginId = request.getParameter("loginId");
 		String loginPw = request.getParameter("loginPw");
 		Member loginedMember = mdao.getMemberByLoginIdAndLoginPw(loginId, loginPw);
@@ -57,12 +65,11 @@ public class MemberController extends HttpServlet {
 			session.setAttribute("loginedMember",loginedMember);
 			
 			//request.setAttribute("loginedMember", loginedMember);
-			response.sendRedirect("http://localhost:8080/web-exam1/article?action=list"); //()안에는 요청을 보낼 url를 적으면 됨.
-			//return list(request,response);
+			
+			return "redirect:http://localhost:8080/web-exam1/article?action=list"; 
+			//redirect는 jsp로 하는게 아니라 servlet을 다시 태우는것jsp가 아니기 때문에 redirect를 앞에다가 구분해주는것 
 		}else {
-			response.sendRedirect("http://localhost:8080/web-exam1/article?action=error"); //()안에는 요청을 보낼 url를 적으면 됨.
-			//return "loginFailed.jsp";
+			return "loginFailed.jsp";
 		}
 	}
-
 }
