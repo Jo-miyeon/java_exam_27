@@ -20,89 +20,77 @@ import board.member.MemberDao;
 @WebServlet("/article")//클래스명과 서블렛명은 달라도된다.
 public class Controller extends HttpServlet {
 //로그인정보 -> request에 저장x session에 저장 	
+	ArticleDao dao = new ArticleDao();
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8"); //문자 인코딩 utf-8로 설정
-		ArticleDao dao = new ArticleDao();
-		MemberDao mdao = new MemberDao();
-		ArrayList<Article> articles = dao.getArticles();
+		
+		
 		
 		String action = request.getParameter("action");
-		
-		
-		//jsp에 articles넘기기
-		//1.request객체에 데이터 저장
-		
-		//2.위에서 저장한 request객체를 이용해서 새로운 jsp 호출요청->목적지 jsp필요
-		String dest = "list.jsp";
+		String dest = "";
 		if(action.equals("list")) {
-			request.setAttribute("myData",articles);//변수와 넘길데이터
-			dest = "/list.jsp"; //목적지 jsp
+			dest = list(request,response); //목적지 
 		}else if(action.equals("insert")) {
-			String title = request.getParameter("title");
-			String body = request.getParameter("body");
-			int mid = Integer.parseInt(request.getParameter("mid"));//게시물 등록할때 
-			Member loginedMember = mdao.getMemberById(mid);
-			request.setAttribute("loginedMember", loginedMember);
-			dao.insertArticle(title, body, mid);
-			
+			dest = insert(request,response);
 		}else if(action.equals("update")) {
-			String title = request.getParameter("title");
-			String body = request.getParameter("body");
-			int id = Integer.parseInt(request.getParameter("id"));
-			
-			dao.updateArticle(title, body, id);
-			
+			dest = update(request,response);
 		}else if(action.equals("delete")) {
-			int id = Integer.parseInt(request.getParameter("id"));
-			
-			dao.deleteArticle(id);
-			
+			dest = delete(request,response);
 		}else if(action.equals("detail")) {
-			int id = Integer.parseInt(request.getParameter("id"));
-			Article article = dao.getArticleById(id);
-			request.setAttribute("myData2",article);
-			dest = "detail.jsp";
+			dest = detail(request,response);
 		}else if(action.equals("showAdd")) {
-			//int mid = Integer.parseInt(request.getParameter("mid"));
-			//Member loginedMember = mdao.getMemberById(mid);
-			HttpSession session = request.getSession();
-			Member loginedMember = (Member)session.getAttribute("loginedMember");
-			request.setAttribute("loginedMember", loginedMember);
 			dest = "addForm.jsp";
+			RequestDispatcher rd = request.getRequestDispatcher(dest); 
+			rd.forward(request, response);
 		}else if(action.equals("showUpdate")) {
-			int id = Integer.parseInt(request.getParameter("id"));
-			Article article = dao.getArticleById(id);
-			request.setAttribute("myData3",article);
-			dest = "updateForm.jsp";
-		}else if(action.equals("showLogin")) {
-			dest="loginForm.jsp";
-		}else if(action.equals("doLogin")) {
-			String loginId = request.getParameter("loginId");
-			String loginPw = request.getParameter("loginPw");
-			Member loginedMember = mdao.getMemberByLoginIdAndLoginPw(loginId, loginPw);
-			if(loginedMember != null) {
-				//session저장소에 저장하는 법 httpsession은 session에 대한 정보들이 저장되어있고 저장소로써 쓸 수있다.
-				HttpSession session = request.getSession();
-				session.setAttribute("loginedMember",loginedMember);
-				
-				//request.setAttribute("loginedMember", loginedMember);
-				dest = "list.jsp";
-			}else {
-				dest = "loginFailed.jsp";
-			}
-		}else if(action.equals("showMember")) {
-			dest="memberForm.jsp";
-		}else if(action.equals("doInsertMember")) {
-			String loginId = request.getParameter("loginId");
-			String loginPw = request.getParameter("loginPw");
-			String nickname = request.getParameter("nickname");
-			mdao.insertMember(loginId, loginPw, nickname);
-			dest = "loginForm.jsp";
+			dest = showUpdate(request,response);
 		}
-		request.setAttribute("myData", dao.getArticles()); //db 바뀐내용이 적용이 된 내용을 다시 mydata로 변경 그걸 list로 보냄
-		//3.요청하기
-		RequestDispatcher rd = request.getRequestDispatcher(dest); //디스패처는 적절한 jsp에다가 요청을 알맞게 전달해주는 객체 서비스 요 
-		rd.forward(request, response); //forward를 쓰면은 request,response를 인자로 넘긴다.
+		
+		RequestDispatcher rd = request.getRequestDispatcher(dest); 
+		rd.forward(request, response);
+	}
+
+	private String showUpdate(HttpServletRequest request, HttpServletResponse response) {
+		int id = Integer.parseInt(request.getParameter("id"));
+		Article article = dao.getArticleById(id);
+		request.setAttribute("myData3",article);
+		return "updateForm.jsp";
+	}
+	private String detail(HttpServletRequest request, HttpServletResponse response) {
+		int id = Integer.parseInt(request.getParameter("id"));
+		Article article = dao.getArticleById(id);
+		request.setAttribute("myData2",article);
+		return "detail.jsp";
+	}
+	private String delete(HttpServletRequest request, HttpServletResponse response) {
+		int id = Integer.parseInt(request.getParameter("id"));
+		dao.deleteArticle(id);
+		return list(request,response);
+	}
+	private String update(HttpServletRequest request, HttpServletResponse response) {
+		String title = request.getParameter("title");
+		String body = request.getParameter("body");
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		dao.updateArticle(title, body, id);
+		return detail(request,response);
+	}
+	private String insert(HttpServletRequest request, HttpServletResponse response){
+		String title = request.getParameter("title");
+		String body = request.getParameter("body");
+		int mid = Integer.parseInt(request.getParameter("mid"));//게시물 등록할때 
+		//Member loginedMember = mdao.getMemberById(mid);
+		//request.setAttribute("loginedMember", loginedMember); session을 이용하게 되면은 request에다가 정보를 넣을 필요가 없어진다
+		dao.insertArticle(title, body, mid);
+		
+		return list(request,response);
+	}
+	public String list(HttpServletRequest request,HttpServletResponse response) {
+		ArrayList<Article> articles = dao.getArticles();
+		request.setAttribute("myData", articles);
+		return "list.jsp";
+		
 	}
 
 }
