@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import board.article.Article;
 import board.article.ArticleDao;
@@ -18,7 +19,7 @@ import board.member.MemberDao;
 
 @WebServlet("/article")//클래스명과 서블렛명은 달라도된다.
 public class Controller extends HttpServlet {
-	
+//로그인정보 -> request에 저장x session에 저장 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8"); //문자 인코딩 utf-8로 설정
 		ArticleDao dao = new ArticleDao();
@@ -62,8 +63,10 @@ public class Controller extends HttpServlet {
 			request.setAttribute("myData2",article);
 			dest = "detail.jsp";
 		}else if(action.equals("showAdd")) {
-			int mid = Integer.parseInt(request.getParameter("mid"));
-			Member loginedMember = mdao.getMemberById(mid);
+			//int mid = Integer.parseInt(request.getParameter("mid"));
+			//Member loginedMember = mdao.getMemberById(mid);
+			HttpSession session = request.getSession();
+			Member loginedMember = (Member)session.getAttribute("loginedMember");
 			request.setAttribute("loginedMember", loginedMember);
 			dest = "addForm.jsp";
 		}else if(action.equals("showUpdate")) {
@@ -78,7 +81,11 @@ public class Controller extends HttpServlet {
 			String loginPw = request.getParameter("loginPw");
 			Member loginedMember = mdao.getMemberByLoginIdAndLoginPw(loginId, loginPw);
 			if(loginedMember != null) {
-				request.setAttribute("loginedMember", loginedMember);
+				//session저장소에 저장하는 법 httpsession은 session에 대한 정보들이 저장되어있고 저장소로써 쓸 수있다.
+				HttpSession session = request.getSession();
+				session.setAttribute("loginedMember",loginedMember);
+				
+				//request.setAttribute("loginedMember", loginedMember);
 				dest = "list.jsp";
 			}else {
 				dest = "loginFailed.jsp";

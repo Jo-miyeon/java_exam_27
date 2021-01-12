@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<c:if test="${loginedMember != null}">${loginedMember.nickname}님 반갑습니다!</c:if>
+<c:if test="${loginedMember != null}">${loginedMember.nickname}님 반갑습니다!</c:if> <!--request에 없을때 자동적으로 session찾음 그래도 없으면 application -->
 <c:if test="${loginedMember == null}">
 <a href="http://localhost:8080/web-exam1/article?action=showLogin">로그인</a>
 <a href="http://localhost:8080/web-exam1/article?action=showMember">회원가입</a>
