@@ -8,13 +8,14 @@
 </head>
 <body>
 <h1>로그인 페이지</h1>
-<form action="article">
+<form action="member">
 	<input type="text" name="loginId" placeholder="아이디">
 	<br>	
 	<input type="password" name="loginPw" placeholder="비밀번호">
 	<br>
-	<input type="hidden" name="action" value="doLogin"><br>
 	<input type="submit" value="로그인">
+	<input type="hidden" name="action" value="doLogin"><br>
+	
 	
 </body>
 </form>

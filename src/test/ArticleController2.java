@@ -29,9 +29,26 @@ public class ArticleController2 {
 			dest = "addForm.jsp";
 		}else if(action.equals("showUpdate")) {
 			dest = showUpdate(request,response);
+		}else if(action.equals("doDeleteReply")) {
+			dest = deleteReply(request,response);
+		}else if(action.equals("doInsertReply")) {
+			dest = insertReply(request,response);
 		}
 		return dest;
 	}
+	private String insertReply(HttpServletRequest request, HttpServletResponse response) {
+		int aid = Integer.parseInt(request.getParameter("aid"));
+		int mid = Integer.parseInt(request.getParameter("mid"));
+		String body = request.getParameter("rbody");	
+		dao.insertReply(aid,body,mid);
+		return "redirect: /web-exam1/article?action=detail&id="+aid;
+	}
+	private String deleteReply(HttpServletRequest request, HttpServletResponse response) {
+		int id = Integer.parseInt(request.getParameter("id")); //지우고 싶은 댓글의 id 
+		int aid = Integer.parseInt(request.getParameter("aid"));
+		dao.deleteReplyById(id);
+		return "redirect: /web-exam1/article?action=detail&id="+aid; //id인지 aid인지 중요함 detail페이지에서 확인해야함 
+	}//return 에 id는 상세보기하고싶은 id 
 	private String showUpdate(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));
 		Article article = dao.getArticleById(id);

@@ -1,3 +1,4 @@
+/*
 package test;
 
 import java.io.IOException;
@@ -27,7 +28,7 @@ public class MemberController extends HttpServlet {
 		if(action.equals("showLogin")) {
 			dest="loginForm.jsp";
 		}else if(action.equals("doLogin")) {
-			doLogin(request,response);
+			dest = doLogin(request,response);
 		}else if(action.equals("showMember")) {
 			dest="memberForm.jsp";
 		}else if(action.equals("doInsertMember")) {
@@ -73,3 +74,4 @@ public class MemberController extends HttpServlet {
 		}
 	}
 }
+*/

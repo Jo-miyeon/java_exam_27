@@ -25,9 +25,7 @@ public class MemberController2 {
 			dest = "memberForm.jsp";
 		} else if (action.equals("doInsertMember")) {
 			dest = doInsertMember(request, response);
-		} else if (action.equals("error")) {
-			dest = "loginFailed.jsp";
-		}
+		} 
 		return dest;
 	}
 
@@ -46,7 +44,7 @@ public class MemberController2 {
 		if (loginedMember != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("loginedMember", loginedMember);
-			return "redirect:http://localhost:8080/web-exam1/article?action=list";
+			return "redirect: /web-exam1/article?action=list";
 		} else {
 			return "loginFailed.jsp";
 		}

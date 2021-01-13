@@ -26,7 +26,7 @@ public class FrontController extends HttpServlet {
 	    String[] uris = uri.split("/");
 	    
 	    
-	    String module = uris[2];
+	    String module = uris[2]; //주소창에 /기준으로 3번째거가 필요 
 	    String dest = "";
 
 	    if(module.equals("article")) {	    	

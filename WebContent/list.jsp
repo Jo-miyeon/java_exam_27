@@ -12,8 +12,8 @@
 </head>
 <c:if test="${loginedMember != null}">${loginedMember.nickname}님 반갑습니다!</c:if> <!--request에 없을때 자동적으로 session찾음 그래도 없으면 application -->
 <c:if test="${loginedMember == null}">
-<a href="http://localhost:8080/web-exam1/article?action=showLogin">로그인</a>
-<a href="http://localhost:8080/web-exam1/article?action=showMember">회원가입</a>
+<a href="/web-exam1/member?action=showLogin">로그인</a>
+<a href="/web-exam1/member?action=showMember">회원가입</a>
 </c:if>
 <body>
 <h1>게시물목록</h1>
@@ -43,10 +43,10 @@
 			<td>
 			<c:choose>
 				<c:when test="${loginedMember == null}">
-					<a href="http://localhost:8080/web-exam1/article?action=showLogin">${article.title}_${article.id}</a>
+					<a href="/web-exam1/member?action=showLogin">${article.title}_${article.id}</a>
 				</c:when>
 				<c:otherwise>
-					<a href="http://localhost:8080/web-exam1/article?action=detail&id=${article.id}">${article.title}_${article.id}</a></td>
+					<a href="/web-exam1/article?action=detail&id=${article.id}">${article.title}_${article.id}</a></td>
 				</c:otherwise>
 			</c:choose>
 				
@@ -59,7 +59,7 @@
 		</c:forEach>
 		
 	</table>
-<a href="http://localhost:8080/web-exam1/article?action=showAdd&mid=${loginedMember.id}">글쓰기</a> <!-- url변경을 통해서 기능들을 선택 -->
+<a href="/web-exam1/article?action=showAdd&mid=${loginedMember.id}">글쓰기</a> <!-- url변경을 통해서 기능들을 선택 -->
 
 </body>
 </html>

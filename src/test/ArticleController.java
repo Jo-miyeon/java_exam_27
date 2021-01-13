@@ -1,3 +1,4 @@
+/*
 package test;
 
 import java.io.IOException;
@@ -101,3 +102,5 @@ public class ArticleController extends HttpServlet {
 	}
 
 }
+
+*/
