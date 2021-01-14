@@ -20,15 +20,16 @@
 
 <h3>댓글</h3>
 <hr>
-${reply.nickname }
-<c:forEach items="${replies}" var="reply">
-	${reply.nickname }<br>
-	${reply.body }<br>
-	${reply.regDate }
-	<c:if test="${reply.mid == loginedMember.id }"> <!-- session을 없애달라고하지않는이상 계속유지 request처럼 초기화x -->
-		<a href="#">수정</a> 
+<c:forEach items ="${replies}" var = "reply">
+	${ reply.nickname }<br>
+	${ reply.body }<br>
+	${reply.regDate }<br>
+	
+	<c:if test="${reply.mid==loginedMember.id}">
+		<a href="#">수정</a>
 		<a href="/web-exam1/article?action=doDeleteReply&id=${reply.id}&aid=${myData2.id}">삭제</a>
 	</c:if>
+	
 	<hr>
 </c:forEach>
 <!-- input에 있는  data를 이용하려면 	form사용한다  -->

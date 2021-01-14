@@ -5,20 +5,22 @@ public class Reply {
 
 	int id;
 	int parentId;
+	int mid;
 	String body;
-	String writer;
+	String nickname;
 	String regDate;
 	
 	public Reply() {
 		
 	}
 	
-	public Reply(int id, int parentId, String body, String wrier, String regDate) {
+	public Reply(int id, int parentId,int mid, String body, String nickname, String regDate) {
 		super();
 		this.id = id;
 		this.parentId = parentId;
+		this.mid = mid;
 		this.body = body;
-		this.writer = writer;
+		this.nickname = nickname;
 		this.regDate = regDate;
 	}
 	
@@ -34,17 +36,25 @@ public class Reply {
 	public void setParentId(int parentId) {
 		this.parentId = parentId;
 	}
+	public int getMid() {
+		return mid;
+	}
+
+	public void setMid(int mid) {
+		this.mid = mid;
+	}
+
 	public String getBody() {
 		return body;
 	}
 	public void setBody(String body) {
 		this.body = body;
 	}
-	public String getWriter() {
-		return writer;
+	public String getNickname() {
+		return nickname;
 	}
-	public void setWriter(String writer) {
-		this.writer = writer;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	public String getRegDate() {
 		return regDate;

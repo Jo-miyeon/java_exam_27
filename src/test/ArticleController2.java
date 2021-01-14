@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import board.article.Article;
 import board.article.ArticleDao;
+import board.article.Reply;
 
 public class ArticleController2 {
 	ArticleDao dao = new ArticleDao();
@@ -16,7 +17,7 @@ public class ArticleController2 {
 		String action = request.getParameter("action");
 		String dest = "";
 		if(action.equals("list")) {
-			dest = list(request,response); //목적지 
+			dest = list(request,response);  
 		}else if(action.equals("insert")) {
 			dest = insert(request,response);
 		}else if(action.equals("update")) {
@@ -33,14 +34,21 @@ public class ArticleController2 {
 			dest = deleteReply(request,response);
 		}else if(action.equals("doInsertReply")) {
 			dest = insertReply(request,response);
+		}else if(action.equals("showReplyUpdate")) {
+			dest = showReplyUpdate(request,response);
 		}
 		return dest;
+	}
+	private String showReplyUpdate(HttpServletRequest request, HttpServletResponse response) {
+		int aid = Integer.parseInt(request.getParameter("aid"));
+		//request.setAttribute("flag","u");
+		return "redirect: /web-exam1/article?action=detail&id="+aid+"&flag=u";
 	}
 	private String insertReply(HttpServletRequest request, HttpServletResponse response) {
 		int aid = Integer.parseInt(request.getParameter("aid"));
 		int mid = Integer.parseInt(request.getParameter("mid"));
 		String body = request.getParameter("rbody");	
-		dao.insertReply(aid,body,mid);
+		dao.insertGetReply(aid,body,mid);
 		return "redirect: /web-exam1/article?action=detail&id="+aid;
 	}
 	private String deleteReply(HttpServletRequest request, HttpServletResponse response) {
@@ -59,7 +67,10 @@ public class ArticleController2 {
 	private String detail(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));
 		Article article = dao.getArticleById(id);
+		ArrayList<Reply> replies = dao.getRepliesByArticleId(id);
 		request.setAttribute("myData2",article);
+		request.setAttribute("replies", replies);
+		
 		return "detail.jsp";
 	}
 	private String delete(HttpServletRequest request, HttpServletResponse response) {
