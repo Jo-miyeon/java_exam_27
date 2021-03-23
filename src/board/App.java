@@ -187,7 +187,6 @@ public class App {
 						}
 
 						Article article2 = articleDao.getArticleById(article.getId());
-						System.out.println("aaa : " + article2.getLikeCnt());
 						ArrayList<Reply> replies2 = articleDao.getRepliesByArticleId(article.getId());
 
 						printArticle(article2, replies2);
@@ -255,7 +254,6 @@ public class App {
 			System.out.println("작성자 : " + article.getNickname());
 			System.out.println("등록날짜 : " + article.getRegDate());
 			System.out.println("조회수 : " + article.getHit());
-			System.out.println("좋아요 : " + article.getLikeCnt());
 			System.out.println("=============================");
 		}
 		for (int i = pagination.getStartPageNoInCurrentBlock(); i <= pagination.getEndPageNoInCurrentBlock(); i++) {
@@ -275,7 +273,6 @@ public class App {
 		System.out.println("작성자 : " + article.getNickname());
 		System.out.println("등록날짜 : " + article.getRegDate());
 		System.out.println("조회수 : " + article.getHit());
-		System.out.println("좋아요 : " + article.getLikeCnt());
 		System.out.println("==== 댓글 ====");
 		for (int i = 0; i < replies.size(); i++) {
 			System.out.println("내용 : " + replies.get(i).getBody());

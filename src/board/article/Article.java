@@ -9,18 +9,26 @@ public class Article {
 	private String regDate;
 	private int hit;
 	private int likeCnt;
-
+	
 	public Article() {
 
 	}
 	
-	public Article(int id, String title, String nickname, String body, String regDate, int hit, int likeCnt) {
+	public Article(int id, String title, String nickname, String body, String regDate, int hit,int likeCnt) {
 		this.id = id;
 		this.title = title;
 		this.nickname = nickname;
 		this.body = body;
 		this.regDate = regDate;
 		this.hit = hit;
+		this.likeCnt=likeCnt;
+	}
+
+	public int getLikeCnt() {
+		return likeCnt;
+	}
+
+	public void setLikeCnt(int lintCnt) {
 		this.likeCnt = likeCnt;
 	}
 
@@ -71,15 +79,4 @@ public class Article {
 	public void setHit(int hit) {
 		this.hit = hit;
 	}
-
-	public int getLikeCnt() {
-		return likeCnt;
-	}
-
-	public void setLikeCnt(int likeCnt) {
-		this.likeCnt = likeCnt;
-	}
-	
-	
-
 }

@@ -13,7 +13,7 @@ public class DBUtil {
 	// 드라이버 정보
 	String driver = "com.mysql.cj.jdbc.Driver";
 	// dbms 주소p
-	String url = "jdbc:mysql://localhost:3308/t1?serverTimezone=UTC";
+	String url = "jdbc:mysql://localhost:3306/t1?serverTimezone=UTC";
 	// 사용자 계정
 	String user = "root";
 	// 사용자 비밀번호

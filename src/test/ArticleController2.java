@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import board.article.Article;
 import board.article.ArticleDao;
+import board.article.Like;
 import board.article.Reply;
-
+import board.member.Member;
 public class ArticleController2 {
 	ArticleDao dao = new ArticleDao();
 	String doAction(HttpServletRequest request,HttpServletResponse response) {
@@ -37,9 +39,37 @@ public class ArticleController2 {
 		}else if(action.equals("showReplyUpdate")) {
 			dest = showReplyUpdate(request,response);
 		}else if(action.equals("doUpdateReply")) {
-			dest=updateReply(request,response);
+			dest = updateReply(request, response);
+		} else if(action.equals("doSearch")) {
+			dest = doSearch(request, response);
+		} else if(action.equals("doLikeCheck")) {
+			dest = doLikeCheck(request, response);
 		}
 		return dest;
+	}
+	private String doLikeCheck(HttpServletRequest request, HttpServletResponse response) {
+		int aid = Integer.parseInt(request.getParameter("id"));
+		HttpSession session = request.getSession();
+		int mid = ((Member)session.getAttribute("loginedMember")).getId();
+		Like like = dao.getLike(aid, mid);
+
+		if(like == null) {
+			dao.insertLike(aid, mid);
+		} else {
+			dao.deleteLike(aid, mid);
+		}
+
+		return "redirect: /web-exam1/article?action=detail&id=" + aid;
+	}
+	private String doSearch(HttpServletRequest request, HttpServletResponse response) {
+		String dateInterval = request.getParameter("dateInterval");
+		String sTarget = request.getParameter("sTarget");
+		String keyword = request.getParameter("keyword");
+
+		ArrayList<Article> searchedArticles =dao.searchArticle(dateInterval, sTarget, keyword);
+		request.setAttribute("myData", searchedArticles);
+
+		return "WEB-INF/jsp/list.jsp";
 	}
 	private String updateReply(HttpServletRequest request, HttpServletResponse response) {
 		String rbody = request.getParameter("rbody");

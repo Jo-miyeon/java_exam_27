@@ -17,15 +17,15 @@ public class ArticleRowMapper implements RowMapper<Article> {
 		int likeCnt = rs.getInt("likeCnt");
 		String regDate = rs.getString("regDate");
 
+		
 		Article article = new Article();
 		article.setTitle(title);
 		article.setBody(body);
 		article.setNickname(nickname);
 		article.setId(id);
 		article.setHit(hit);
-		article.setLikeCnt(likeCnt);
 		article.setRegDate(regDate);
-		
+		article.setLikeCnt(likeCnt);
 		return article;
 	}
 	

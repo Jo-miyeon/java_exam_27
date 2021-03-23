@@ -8,6 +8,14 @@
 <title>Insert title here</title>
 </head>
 <body>
+<c:if test="${loginedMember != null}">
+${loginedMember.nickname}님 반갑습니다!<br>
+<a href="/web-exam1/member?action=doLogout">로그아웃</a><br>
+</c:if>
+<c:if test="${loginedMember == null}">
+<a href="/web-exam1/member?action=showLogin">로그인</a>
+<a href="/web-exam1/member?action=showMember">회원가입</a>
+</c:if>
 <h1>게시물 상세보기</h1>
 번호:${myData2.id}
 <hr>
@@ -17,7 +25,8 @@
 <hr>
 <a href="/web-exam1/article?action=showUpdate&id=${myData2.id}">수정</a>
 <a href="/web-exam1/article?action=delete&id=${myData2.id}">삭제</a>
-
+<hr>
+<a href="/web-exam1/article?action=doLikeCheck&id=${myData2.id}">좋아요</a> ${ myData2.likeCnt }
 <h3>댓글</h3>
 <hr>
 <c:forEach items ="${replies}" var = "reply">

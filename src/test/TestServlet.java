@@ -20,26 +20,20 @@ public class TestServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8"); //문자 인코딩 utf-8로 설정
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();//브라우저에 출력해줌
-		
 		out.println("Hello");
-		out.println("안녕하삼");
 		String num= request.getParameter("num");
 		System.out.println(num);
 		String loginId = request.getParameter("loginId");
 		System.out.println(loginId);
 		String name = "";
-		
 		if(loginId.equals("miyeon")) {
 			name="미연";
 		}else if(loginId.equals("jo")) {
 			name="조조";
 		}
-		out.println(name+"님 안녕하세요!");
-		
-		
+		out.println(name+"님 안녕하세요!");	
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }
